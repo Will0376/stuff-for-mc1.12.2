@@ -1,4 +1,5 @@
 {
+"Update 2.2":"Fix crash updLog.",
 "Update 2.1":"Fix crash when creating a config",
 "Update 2.0":"Added(Cheats): FullBright; Code optimization",
 "Update 1.9":"Added: Draw arrows in the center; Code optimization(Draw slots,Variables in gui)",

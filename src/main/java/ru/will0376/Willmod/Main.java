@@ -30,9 +30,9 @@ public class Main {
 	   public static final String NAME = "Willmod";
 	   public static final String VERSION = "2.3";
 	   public static final boolean clientSideOnly = true; // def: true
-	   public static final boolean Debugmode = true; //change before compilation def: false
+	   public static final boolean Debugmode = false; //change before compilation def: false
 	   public static final boolean Deleteconfigfordebug = false;//change before compilation def: false
-	   public static final boolean Release = false;//change before compilation def: true
+	   public static final boolean Release = true;//change before compilation def: true
 	   public static final String cfgDefaultName = MODID + ".cfg";
 	   public static String dir;
 	   public static Object objJsonUpdList;

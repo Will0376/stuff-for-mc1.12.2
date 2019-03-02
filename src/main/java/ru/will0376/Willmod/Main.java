@@ -11,6 +11,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import ru.will0376.Willmod.proxys.CommonProxy;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -28,9 +29,9 @@ public class Main {
 	
 	   public static final String MODID = "willmod";
 	   public static final String NAME = "Willmod";
-	   public static final String VERSION = "2.3";
+	   public static final String VERSION = "2.4";
 	   public static final boolean clientSideOnly = true; // def: true
-	   public static final boolean Debugmode = false; //change before compilation def: false
+	   public static boolean Debugmode; //change before compilation def: false
 	   public static final boolean Deleteconfigfordebug = false;//change before compilation def: false
 	   public static final boolean Release = true;//change before compilation def: true
 	   public static final String cfgDefaultName = MODID + ".cfg";
@@ -48,6 +49,12 @@ public class Main {
 	    	String cfdir = event.getModConfigurationDirectory().toString();
 	    	dir = cfdir;
 	    	config.init(cfdir);
+			checkFolders(dir.replace("config","")+"WillmodPng");
+			checkFolders(dir.replace("config","")+"WillmodPng/"+"Morning");
+			checkFolders(dir.replace("config","")+"WillmodPng/"+"Day");
+			checkFolders(dir.replace("config","")+"WillmodPng/"+"Evering");
+			checkFolders(dir.replace("config","")+"WillmodPng/"+"Night");
+			Debugmode = config.debugmode;
 	    	log = event.getModLog();
 	    } 
 
@@ -62,5 +69,9 @@ public class Main {
 	    {
 	        proxy.postInit(event);
 	    }
+	    private void checkFolders(String path){
+	    	if(!new File(path).exists())
+				new File(path).mkdir();
+		}
 
 }

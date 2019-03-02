@@ -172,14 +172,14 @@ public class onGuiGuiIngame extends Gui {
 					drawString(this.mc.fontRenderer,"|",getx()+ 0 + 87, 0 + i - 1, 16777215);
 				}
 			}
-		} catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
+		} catch (IllegalArgumentException | SecurityException e) {
 			e.printStackTrace();
 		}
 	}
-	private boolean getUnicode() throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException {
+	private boolean getUnicode() throws IllegalArgumentException, SecurityException {
 		return mc.isUnicode();
 	}	
-	public int getFPS() throws IllegalArgumentException, IllegalAccessException{
+	public int getFPS() throws IllegalArgumentException {
 		int fps = Integer.valueOf(mc.getDebugFPS());
 		return fps;
 	}

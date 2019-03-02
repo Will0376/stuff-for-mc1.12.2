@@ -26,8 +26,8 @@ public class config {
 	 *  saveConfig() - saves the current config
 	 *  loadConfig() - loads the config
 	 */
-	static File dirr;
-		public static void init(String dir) {
+	private static File dirr;
+		static void init(String dir) {
 			File fl = new File(dir+"/"+Main.cfgDefaultName);
 			dirr = fl;
 			
@@ -69,7 +69,7 @@ public class config {
 			
 			
 		}
-		public static void loadConfig(File fl) {
+		private static void loadConfig(File fl) {
 			  JSONParser parser = new JSONParser();
 			  try {
 				Object obj = parser.parse(new FileReader(fl));
@@ -78,29 +78,32 @@ public class config {
 				FMLLog.log.error("=== Hmm, Error: "+e.getClass().getSimpleName()+" StackTrace:  ===");
 				e.printStackTrace();
 				FMLLog.log.error("=== === === === === === === === ===  ===");
-				FMLLog.log.error("=== ReCreated Config file ===");
+				FMLLog.log.error("=== Recreated Config file ===");
 				createConfig(fl); 
 				FMLLog.log.error("=== Done ===");
-				FMLLog.log.error("=== ReLoad Config file ===");
+				FMLLog.log.error("=== Reload Config file ===");
 				loadConfig(fl);
 				FMLLog.log.error("=== Done ===");
 			}
 		}
 		//all booleans
 		public static boolean HUD = true;
-	///
+		///
 		public static boolean coloredFPS = true;
 		public static boolean drawSlots = true;
 		public static boolean drawArrows = true;
-	///
+		///
 		public static boolean drawArrowInTheCenter = true;
 		public static boolean renderExp = true;
 		public static boolean cheat = false;
 		public static boolean useLLW = false;
-		public static boolean enabledUpdater = true;
+		public static boolean enabledUpdater = false;
+		public static boolean debugmode = false;
 		//end
+
 		private static String buildJson() {
 			 JSONObject jo = new JSONObject();
+			jo.put("debugmode", debugmode);
 			 jo.put("HUD", HUD);
 			 jo.put("coloredFPS",coloredFPS);
 			 jo.put("drawSlots",drawSlots);
@@ -126,11 +129,10 @@ public class config {
 			cheat = (boolean) jsonObject.get("cheat");
 			useLLW = (boolean) jsonObject.get("useLLW");
 			enabledUpdater = (boolean) jsonObject.get("enabledUpdater");
+			debugmode = (boolean) jsonObject.get("debugmode");
 			}
 			catch(NullPointerException | NumberFormatException | ClassCastException e) {
 				if(e.getClass().getSimpleName().equals("ClassCastException")) {
-					Minecraft mc = Minecraft.getMinecraft();
-				
 					FMLLog.log.error("[Wmod]=== Hmm, Сritical error: "+e.getClass().getSimpleName()+" StackTrace:  ===");
 					e.printStackTrace();
 					FMLLog.log.error("[Wmod]=== === === === === === === === ===  ===");
@@ -141,10 +143,10 @@ public class config {
 				FMLLog.log.error("[Wmod]=== Hmm, Error: "+e.getClass().getSimpleName()+" StackTrace:  ===");
 				e.printStackTrace();
 				FMLLog.log.error("[Wmod]=== === === === === === === === ===  ===");
-				FMLLog.log.error("[Wmod]=== ReCreated Config file ===");
+				FMLLog.log.error("[Wmod]=== Recreated Config file ===");
 				createConfig(fl); 
 				FMLLog.log.error("[Wmod]=== Done ===");
-				FMLLog.log.error("[Wmod]=== ReLoad Config file ===");
+				FMLLog.log.error("[Wmod]=== Reload Config file ===");
 				loadConfig(fl);
 				FMLLog.log.error("[Wmod]=== Done ===");
 				}

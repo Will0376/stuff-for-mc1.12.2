@@ -29,7 +29,7 @@ public class guiMods extends defGui {
 	       if(Main.Debugmode) this.buttonList.add(new GuiButton(-3, this.width /2 - 50  , this.height / 2 - 80 , 80, 20, I18n.format(enabled(config.useLLW)+"Auto Load Last World", new Object[0])));
 	        if(str == 1) {
 		        this.buttonList.add(new GuiButton(3, this.width /2 - 70 , this.height / 2 - 40 , 70, 20, I18n.format(enabled(config.HUD)+"HUD", new Object[0])));
-		        this.buttonList.add(new GuiButton(4, this.width /2 - 70 , this.height /2 , 90, 20, I18n.format("Test Gui", new Object[0])));
+		        this.buttonList.add(new GuiButton(4, this.width /2 - 70 , this.height /2 , 90, 20, I18n.format("gui.f2", new Object[0])));
 	        	this.buttonList.add(new GuiButton(5, this.width /2 - 70 , this.height / 2  + 40, 90, 20, I18n.format("gui.f3", new Object[0])));
 	            /**adding menu
 	             * 
@@ -105,7 +105,6 @@ public class guiMods extends defGui {
 	            }
 	            if (g.id == 4)
 	            {
-	            	this.mc.displayGuiScreen(new testGui(this));	 
 	            }
 	            
 	            if(g.id == 5) {

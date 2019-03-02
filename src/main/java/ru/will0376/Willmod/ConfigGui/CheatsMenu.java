@@ -28,7 +28,10 @@ class CheatsMenu extends defGui{
 	        this.buttonList.add(new GuiButton(-1, (this.width - this.xSize) / 2 + 20, this.height /2 - 75 , 30, 20, I18n.format("Back", new Object[0])));
 	        this.buttonList.add(new GuiButton(2, (this.width - this.xSize) / 2 - 20, this.height / 2  + 18, 30, 20, I18n.format("Down", new Object[0])));
 	        if(str == 1) {
+	        	if((Main.Debugmode && config.cheat))
 				this.buttonList.add(new GuiButton(3, this.width /2 - 70 , this.height / 2 - 40 , 90, 20, I18n.format(enabledFB() +"FullBright(WIP)", new Object[0])));
+				else
+	        	this.buttonList.add(new GuiButton(1232, this.width /2 - 70 , this.height / 2 - 40 , 90, 20, I18n.format("gui.f1", new Object[0])));
 		        this.buttonList.add(new GuiButton(4, this.width /2 - 70 , this.height /2 , 90, 20, I18n.format(enabled(config.renderExp)+"Render Exp", new Object[0])));
 	        	this.buttonList.add(new GuiButton(5, this.width /2 - 70 , this.height / 2  + 40, 90, 20, I18n.format("gui.f3", new Object[0])));
 	            /**adding menu

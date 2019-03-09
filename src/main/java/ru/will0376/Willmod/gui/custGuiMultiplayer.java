@@ -24,11 +24,11 @@ public class custGuiMultiplayer extends GuiMultiplayer { //for tests
 		this.buttonList.add(new GuiButton(3, -100, -100, 0, 0, I18n.format("selectServer.add")));
         //
 
-		this.buttonList.add(new GuiButton(4, this.width / 3 - 40 , this.height - 28, 130, 20, I18n.format("selectServer.direct")));
-		this.buttonList.add(new GuiButton(8, this.width / 3 - 40, this.height - 54, 130, 20, I18n.format("selectServer.refresh")));
+		this.buttonList.add(new GuiButton(4, this.width / 2 - 170, this.height - 28, 150, 20, I18n.format("selectServer.direct")));
+		this.buttonList.add(new GuiButton(8, this.width / 2 - 170, this.height - 54, 150, 20, I18n.format("selectServer.refresh")));
 
-        this.btnSelectServer = this.addButton(new GuiButton(1, this.width / 2 + 40 , this.height - 54, 130, 20, I18n.format("selectServer.select")));
-        this.buttonList.add(new GuiButton(0, this.width / 2 + 40 , this.height - 28, 130, 20, I18n.format("gui.cancel")));
+        this.btnSelectServer = this.addButton(new GuiButton(1, this.width / 2 + 20  , this.height - 54, 150, 20, I18n.format("selectServer.select")));
+        this.buttonList.add(new GuiButton(0, this.width / 2 + 20 , this.height - 28, 150, 20, I18n.format("gui.cancel")));
         try {
         this.selectServer(this.serverListSelector.getSelected());
         }

@@ -15,8 +15,8 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.common.FMLCommonHandler;
-import org.lwjgl.Sys;
 import org.lwjgl.opengl.GL11;
+import ru.will0376.Willmod.LoadPng;
 import ru.will0376.Willmod.Main;
 
 import javax.imageio.ImageIO;
@@ -29,18 +29,11 @@ import java.util.List;
 public class CustGuiMainMenu extends GuiMainMenu {
 	private static int RandomTextureMorning = 0;
 	private static int RandomTextureDay = 0;
-	private static int RandomTextureEvering = 0;
+	private static int RandomTextureEvening = 0;
 	private static int RandomTextureNight = 0;
-
-	private File rootDirectory = new File( Main.dir.replace("config","")+"WillmodPng/");
-	private File Morningfolder = new File(rootDirectory.toString() + "/Morning");
-	private File Dayfolder = new File(rootDirectory.toString() + "/Day");
-	private File Everingfolder = new File(rootDirectory.toString() + "/Evering");
-	private File Nightfolder = new File(rootDirectory.toString() + "/Night");
-	private int MorningLenght = folderSize(Morningfolder);
-	private int DayLenght = folderSize(Dayfolder);
-	private int EveringLenght = folderSize(Everingfolder);
-	private int NightLenght = folderSize(Nightfolder);
+	private static float minceraftRollRandom = 0;
+	public String old = "";
+	LoadPng v = new LoadPng().init();
 
 	@Override
 	public void addSingleplayerMultiplayerButtons(int p_73969_1_, int p_73969_2_)
@@ -49,20 +42,20 @@ public class CustGuiMainMenu extends GuiMainMenu {
 		this.buttonList.add(new GuiButton(2, this.width / 2 - 100, p_73969_1_ + p_73969_2_, I18n.format("menu.multiplayer")));
 		this.buttonList.add(new GuiButton(6, this.width / 2 - 100, p_73969_1_ + p_73969_2_ * 2, I18n.format("fml.menu.mods")));
 
-		if(MorningLenght != 0){
-			RandomTextureMorning = (int) (Math.random() * MorningLenght + 1);
+		if(v.MorningLenght != 0){
+			RandomTextureMorning = (int) (Math.random() * v.MorningLenght + 1);
 		}
 
-		if(DayLenght != 0){
-			RandomTextureDay = (int) (Math.random() * DayLenght + 1);
+		if(v.DayLenght != 0){
+			RandomTextureDay = (int) (Math.random() * v.DayLenght + 1);
 		}
 
-		if(EveringLenght != 0){
-			RandomTextureEvering = (int) (Math.random() * EveringLenght + 1);
+		if(v.EveningLenght != 0){
+			RandomTextureEvening = (int) (Math.random() * v.EveningLenght + 1);
 		}
 
-		if(NightLenght != 0){
-			RandomTextureNight = (int) (Math.random() * NightLenght + 1);
+		if(v.NightLenght != 0){
+			RandomTextureNight = (int) (Math.random() * v.NightLenght + 1);
 		}
 
 	}
@@ -74,14 +67,19 @@ public class CustGuiMainMenu extends GuiMainMenu {
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder bufferbuilder = tessellator.getBuffer();
 		String tmp = choose();
+
 		if(tmp.equals("null")){
 			Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(Main.MODID + ":textures/gui/def.png"));
 		}
 		else {
 			try {
-				new TextureUtil().uploadTextureImage(0, ImageIO.read(new File(tmp)));
+				if(!old.equals(tmp)) {
+					new TextureUtil().uploadTextureImage(0, ImageIO.read(new File(tmp)));
+					old = tmp;
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
+				Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(Main.MODID + ":textures/gui/def.png"));
 			}
 		}
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -93,7 +91,7 @@ public class CustGuiMainMenu extends GuiMainMenu {
 		tessellator.draw();
 
 		//title textures + splash
-		this.mc.getTextureManager().bindTexture(MINECRAFT_TITLE_TEXTURES);
+		this.mc.getTextureManager().bindTexture(new ResourceLocation("textures/gui/title/minecraft.png"));
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 		int j = this.width / 2 - 137;
 		if ((double)this.minceraftRoll < 1.0E-4D)
@@ -156,11 +154,11 @@ public class CustGuiMainMenu extends GuiMainMenu {
 		//System.out.println(Main.Debugmode);
 		if(Main.Debugmode){
 			this.drawString(this.fontRenderer, "DebugMode:", this.width - this.fontRenderer.getStringWidth("DebugMode:") - 2, 0, 16777215);
-			this.drawString(this.fontRenderer, getText("Morning")+MorningLenght, this.width - this.fontRenderer.getStringWidth(getText("Morning")+MorningLenght) - 2, 10, 16777215);
-			this.drawString(this.fontRenderer, getText("Day")+DayLenght, this.width - this.fontRenderer.getStringWidth(getText("Day")+DayLenght) - 2, 20, 16777215);
-			this.drawString(this.fontRenderer, getText("Evering")+EveringLenght, this.width - this.fontRenderer.getStringWidth(getText("Evering")+EveringLenght) - 2, 30, 16777215);
-			this.drawString(this.fontRenderer, getText("Night")+NightLenght, this.width - this.fontRenderer.getStringWidth(getText("Night")+NightLenght) - 2, 40, 16777215);
-
+			this.drawString(this.fontRenderer, getText("Morning")+v.MorningLenght, this.width - this.fontRenderer.getStringWidth(getText("Morning")+v.MorningLenght) - 2, 10, 16777215);
+			this.drawString(this.fontRenderer, getText("Day")+v.DayLenght, this.width - this.fontRenderer.getStringWidth(getText("Day")+v.DayLenght) - 2, 20, 16777215);
+			this.drawString(this.fontRenderer, getText("Evening")+v.EveningLenght, this.width - this.fontRenderer.getStringWidth(getText("Evening")+v.EveningLenght) - 2, 30, 16777215);
+			this.drawString(this.fontRenderer, getText("Night")+v.NightLenght, this.width - this.fontRenderer.getStringWidth(getText("Night")+v.NightLenght) - 2, 40, 16777215);
+			this.drawString(this.fontRenderer,"Fps: "+Minecraft.getMinecraft().getDebugFPS(),this.width /2 - this.fontRenderer.getStringWidth("fps: "),0, 16777215);
 		}
 		drawButton(mouseX,mouseY,partialTicks);
 
@@ -173,11 +171,11 @@ public class CustGuiMainMenu extends GuiMainMenu {
 	}
 	private void drawButton(int mouseX, int mouseY, float partialTicks){
 		for (GuiButton guiButton : this.buttonList) {
-			((GuiButton) guiButton).drawButton(this.mc, mouseX, mouseY, partialTicks);
+			guiButton.drawButton(this.mc, mouseX, mouseY, partialTicks);
 		}
 
 		for (GuiLabel guiLabel : this.labelList) {
-			((GuiLabel) guiLabel).drawLabel(this.mc, mouseX, mouseY);
+			guiLabel.drawLabel(this.mc, mouseX, mouseY);
 		}
 	}
 
@@ -199,51 +197,29 @@ public class CustGuiMainMenu extends GuiMainMenu {
 		}
 		return "day";
 	}
-	private List<String> getAllPng(String foldername){
-		List<String> allpath = new ArrayList<String>();
-      File directory = new File(rootDirectory.toString()+"/" + foldername);
-      try {
-		  for (String path : directory.list()) {
-			  if (path != null)
-				  allpath.add(directory+"/"+path);
-		  }
-	  }
-      catch (NullPointerException e){ /** **/}
-      return allpath;
-	}
 
-	private static int folderSize(File directory) {
-		if(!directory.exists()){
-			return 0;
-		}
-		int length = directory.listFiles().length;
-		return length;
-	}
 
 	private String choose(){
-		List<String> morning = getAllPng("Morning");
-		List<String> day = getAllPng("Day");
-		List<String> evering = getAllPng("Evering");
-		List<String> night = getAllPng("Night");
+
 		switch(getTimes()){
 			case "morning":
 				if(RandomTextureMorning != 0)
-					return morning.get(RandomTextureMorning -1);
+					return v.morning.get(RandomTextureMorning -1);
 				else
 					return "null";
 			case "day":
 				if(RandomTextureDay != 0)
-					return day.get(RandomTextureDay -1);
+					return v.day.get(RandomTextureDay -1);
 				else
 					return "null";
-			case "evering":
-				if(RandomTextureEvering != 0)
-					return evering.get(RandomTextureEvering -1);
+			case "evening":
+				if(RandomTextureEvening != 0)
+					return v.evening.get(RandomTextureEvening -1);
 				else
 					return "null";
 			case "night":
 				if(RandomTextureNight != 0)
-					return night.get(RandomTextureNight -1);
+					return v.night.get(RandomTextureNight -1);
 				else
 					return "null";
 		}
@@ -262,8 +238,8 @@ public class CustGuiMainMenu extends GuiMainMenu {
 				else
 					return "Default";
 			case "evering":
-				if(RandomTextureEvering != 0)
-					return String.valueOf(RandomTextureEvering);
+				if(RandomTextureEvening != 0)
+					return String.valueOf(RandomTextureEvening);
 				else
 					return "Default";
 			case "night":
@@ -273,5 +249,26 @@ public class CustGuiMainMenu extends GuiMainMenu {
 					return "Default";
 		}
 		return String.valueOf(0);
+	}
+	public static void drawTexturedQuadFit(double x, double y, double width, double height, double zLevel) {
+
+
+		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		Tessellator tessellator = Tessellator.getInstance();
+		BufferBuilder bufferbuilder = tessellator.getBuffer();
+		bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
+
+		/*
+		tessellator.startDrawingQuads();
+		tessellator.addVertexWithUV(x + 0.0D, y + height, zLevel, 0.0D, 1.0D);
+		tessellator.addVertexWithUV(x + width, y + height, zLevel, 1.0D, 1.0D);
+		tessellator.addVertexWithUV(x + width, y + 0.0D, zLevel, 1.0D, 0.0D);
+		tessellator.addVertexWithUV(x + 0.0D, y + 0.0D, zLevel, 1.0D, 0.0D);
+		*/
+		bufferbuilder.pos(x + 0.0D, y + height, zLevel).tex(0.0D, 1.0D).endVertex();
+		bufferbuilder.pos(x + width, y + height, zLevel).tex(1.0D, 1.0D).endVertex();
+		bufferbuilder.pos(x + width, y + 0.0D, zLevel).tex(1.0D, 0.0D).endVertex();
+		bufferbuilder.pos(x + 0.0D, y + 0.0D, zLevel).tex(1.0D, 0.0D).endVertex();
+		tessellator.draw();
 	}
 }

@@ -14,7 +14,6 @@ import net.minecraft.client.settings.GameSettings;
 import net.minecraft.util.ResourceLocation;
 import ru.will0376.Willmod.Main;
 import ru.will0376.Willmod.config;
-import ru.will0376.Willmod.Updater.UpdateChecker;
 import ru.will0376.api.gui.defGui;
 
 public class ConfigHUDGui extends defGui {    

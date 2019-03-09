@@ -12,8 +12,6 @@ import net.minecraftforge.fml.common.gameevent.InputEvent;
 import ru.will0376.Willmod.Main;
 import ru.will0376.Willmod.config;
 import ru.will0376.Willmod.ConfigGui.guiMods;
-import ru.will0376.Willmod.Updater.GuiUpdated;
-import ru.will0376.Willmod.Updater.Updater;
 import ru.will0376.Willmod.gui.CustGuiMainMenu;
 import ru.will0376.Willmod.gui.custGuiMultiplayer;
 
@@ -21,7 +19,7 @@ public class events {
     @SubscribeEvent
     public void OpenGuiMultiplayer(GuiOpenEvent e)
     {
-        if (e.getGui()  instanceof GuiMultiplayer)
+        if (e.getGui()  instanceof GuiMultiplayer && config.customMultiplayer)
         {
         	e.setGui(new custGuiMultiplayer(new GuiMainMenu()));
         }    
@@ -43,12 +41,6 @@ public class events {
             Minecraft.getMinecraft().displayGuiScreen(new guiMods(null));
         }
         
-    }
-    @SubscribeEvent
-    public void updatedMod(GuiOpenEvent e) {
-    	if(e.getGui() instanceof CustGuiMainMenu && Updater.beUpdates) {
-    		e.setGui(new GuiUpdated(null));
-    	}
     }
 	@SubscribeEvent
 	public void CustomGameMenu(GuiOpenEvent e) {
